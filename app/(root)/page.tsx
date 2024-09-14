@@ -1,16 +1,33 @@
+import PodcastCard from "@/components/PodcastCard";
 import { Button } from "@/components/ui/button";
+import { podcastData } from "@/constants";
 import React from "react";
 
-
-const Page = () => {
+const Home = () => {
   return (
     <div className="mt-9 flex flex-col gap-9">
       <section className="flex flex-col gap-5">
-        <h1 className="text-20 font-bold text-white-1">Trending Podcasts </h1>
-        <Button >Button</Button>
+        <h1 className="text-20 font-bold text-white-1">
+          Trending Podcasts </h1>
+
+        <div className="podcast_grid">
+        {podcastData.map(({ id, title, imgURL, description }) => {
+          return (
+            <PodcastCard
+              key={id}
+              podcastId={id}
+              title={title}
+              description={description}
+              imgURL={imgURL}
+            />
+          );
+        })}
+        </div>
+
+        <Button>Button</Button>
       </section>
     </div>
   );
 };
 
-export default Page;
+export default Home;
