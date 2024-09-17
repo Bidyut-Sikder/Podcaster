@@ -1,5 +1,19 @@
+import Image from "next/image";
+
 export default function AuthLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  return <main>{children}</main>;
+  return (
+    <main className="relative h-screen w-full">
+      <div className="absolute size-full">
+        <Image
+          src="/images/bg-img.png"
+          fill
+          className="size-full"
+          alt="background"
+        />
+      </div>
+      {children}
+    </main>
+  );
 }
