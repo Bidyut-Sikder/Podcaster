@@ -16,6 +16,8 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
   }
   switch (event.type) {
     case "user.created":
+        console.log('bidyut created');
+        
       await ctx.runMutation(internal.users.createUser, {
         clerkId: event.data.id,
         email: event.data.email_addresses[0].email_address,
@@ -31,6 +33,8 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
       });
       break;
     case "user.deleted":
+        console.log('bidyut deleted');
+        
       await ctx.runMutation(internal.users.deleteUser, {
         clerkId: event.data.id as string,
       });
@@ -39,7 +43,7 @@ const handleClerkWebhook = httpAction(async (ctx, request) => {
   return new Response(null, {
     status: 200,
   });
-});
+});  
 
 const http = httpRouter();
 

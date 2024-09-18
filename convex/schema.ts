@@ -29,4 +29,10 @@ export default defineSchema({
     clerkId: v.string(),
     name: v.string(),
   }),
+  clientData: defineTable({
+    email: v.string(),
+    imageUrl: v.string(),
+
+    name: v.string(),
+  }),
 });

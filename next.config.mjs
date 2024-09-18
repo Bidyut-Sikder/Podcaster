@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  http: {
+    enabled: true,
+    // Additional HTTP configuration options if needed
+  },
     images: {
         remotePatterns: [
           {
