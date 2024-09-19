@@ -3,6 +3,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,6 +22,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -48,21 +57,47 @@ function CreatePodcast() {
               control={form.control}
               name="podcastTitle"
               render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
+                <FormItem className="flex flex-col gap-2.5">
+                  <FormLabel className="text-16 font-bold text-white-1">
+                    Username
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input
+                      className="input-class focus-visible:ring-orange-1"
+                      placeholder="JSM Pro Podcast"
+                      {...field}
+                    />
                   </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
-                  <FormMessage />
+
+                  <FormMessage className="text-white-1" />
                 </FormItem>
               )}
             />
-          </div>
 
-    
+            <div className="flex flex-col gap-2.5">
+              <Label className="text-16 font-bold text-white-1">
+                Select AI Voice
+              </Label>
+
+              <Select>
+                <SelectTrigger
+                  className={cn(
+                    "text-16 w-full border-none bg-black-1 text-gray-1"
+                  )}
+                >
+                  <SelectValue className="placeholder:text-gray-1" placeholder="Select AI Voice" />
+                </SelectTrigger>
+                <SelectContent className="text-16 border-none bg-black-1 font-bold text-white-1 focus:ring-orange-1">
+               
+             {
+             ['voice-1','voice-2'].map((category)=>(
+              <SelectItem key={category} className="capitalize focus:bg-orange-1" value={category}>{category}</SelectItem>
+             ))
+             }
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </form>
       </Form>
     </section>
