@@ -1,5 +1,9 @@
 import { ConvexError, v } from "convex/values";
 
+
+
+
+
 import { internalMutation, query } from "./_generated/server";
 
 export const getUserById = query({
@@ -54,13 +58,17 @@ export const createUser = internalMutation({
     email: v.string(),
     imageUrl: v.string(),
     name: v.string(),
+    roll:  v.optional(v.string()),
   },
   handler: async (ctx, args) => {
+    console.log(args);
+    
     await ctx.db.insert("users", {
       clerkId: args.clerkId,
       email: args.email,
       imageUrl: args.imageUrl,
       name: args.name,
+      roll:args.roll
     });
   },
 });

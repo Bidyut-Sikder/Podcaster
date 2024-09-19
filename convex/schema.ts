@@ -28,11 +28,6 @@ export default defineSchema({
     imageUrl: v.string(),
     clerkId: v.string(),
     name: v.string(),
-  }),
-  clientData: defineTable({
-    email: v.string(),
-    imageUrl: v.string(),
-
-    name: v.string(),
+    roll:  v.optional(v.string()),
   }),
 });
