@@ -32,8 +32,11 @@ import { Airplay, Loader } from "lucide-react";
 import { Id } from "@/convex/_generated/dataModel";
 
 const formSchema = z.object({
-  username: z.string().min(2, {
+  podcastTitle: z.string().min(2, {
     message: "Username must be at least 2 characters.",
+  }),
+  podcastDescription: z.string().min(5, {
+    message: "Description must be at least 5 characters.",
   }),
 });
 
@@ -42,11 +45,12 @@ const voiceCategories = ["alloy", "shimmer", "nova", "echo", "fable", "onyx"];
 function CreatePodcast() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePrompt, setImagePrompt] = useState("");
-  const [audioStorageId, setAudioStorageId] = useState<Id<"_storage"> | null>(
-    null
-  );
+  const [imageUrl, setImageUrl] = useState("");
 
   const [imageStorageId, setImageStorageId] = useState<Id<"_storage"> | null>(
+    null
+  );
+  const [audioStorageId, setAudioStorageId] = useState<Id<"_storage"> | null>(
     null
   );
 
@@ -58,7 +62,8 @@ function CreatePodcast() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      podcastTitle: "",
+      podcastDescription: "",
     },
   });
 
@@ -82,11 +87,11 @@ function CreatePodcast() {
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2.5">
                   <FormLabel className="text-16 font-bold text-white-1">
-                    Username
+                    Title
                   </FormLabel>
                   <FormControl>
                     <Input
-                      className="input-class focus-visible:ring-orange-1"
+                      className="input-class  focus-visible:ring-offset-orange-1"
                       placeholder="JSM Pro Podcast"
                       {...field}
                     />
@@ -105,7 +110,7 @@ function CreatePodcast() {
               <Select onValueChange={(value) => setVoiceType(value)}>
                 <SelectTrigger
                   className={cn(
-                    "text-16 w-full border-none bg-black-1 text-gray-1"
+                    "   focus-visible:ring-offset-orange-1  text-16 w-full border-none bg-black-1 text-gray-1"
                   )}
                 >
                   <SelectValue
@@ -156,7 +161,16 @@ function CreatePodcast() {
           </div>
 
           <div className="flex flex-col pt-10">
-            <GeneratePodcast />
+            <GeneratePodcast
+              setAudioStorageId={setAudioStorageId}
+              setAudio={setAudioUrl}
+              voiceType={voiceType}
+              audio={audioUrl}
+              voicePrompt={voicePrompt}
+              setVoicePrompt={setVoicePrompt}
+              setAudioDuration={setAudioDuration}
+            />
+
             <GenerateThumbnail />
 
             <div className="mt-10 w-full">
