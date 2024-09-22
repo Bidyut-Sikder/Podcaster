@@ -61,7 +61,7 @@ export const createUser = internalMutation({
     roll:  v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    console.log(args);
+  //  console.log(args);
     
     await ctx.db.insert("users", {
       clerkId: args.clerkId,

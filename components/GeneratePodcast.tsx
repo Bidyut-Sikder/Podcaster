@@ -23,6 +23,9 @@ const useGeneratePodcast = ({
     }
 
     try {
+
+
+      
     } catch (error) {
       console.log("error generating podcast", error);
       setIsGenerating(false);
