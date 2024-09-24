@@ -56,10 +56,11 @@ export type VoiceType =
   | "fable"
   | "onyx"
   | "nova"
-  | "shimmer";
+  | "shimmer"
+  ;
 
 export interface GeneratePodcastProps {
-  voiceType: VoiceType;
+  voiceType:  string //VoiceType;
   setAudio: Dispatch<SetStateAction<string>>;
   audio: string;
   setAudioStorageId: Dispatch<SetStateAction<Id<"_storage"> | null>>;

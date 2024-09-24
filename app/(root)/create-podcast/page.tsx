@@ -58,7 +58,9 @@ function CreatePodcast() {
   const [audioDuration, setAudioDuration] = useState(0);
   const [voicePrompt, setVoicePrompt] = useState("");
 
-  const [voiceType, setVoiceType] = useState<string | null>(null);
+
+     const [voiceType, setVoiceType] = useState<string>('');
+  //  const [voiceType, setVoiceType] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -165,14 +167,20 @@ function CreatePodcast() {
             <GeneratePodcast
               setAudioStorageId={setAudioStorageId}
               setAudio={setAudioUrl}
-              
               audio={audioUrl}
               voicePrompt={voicePrompt}
               setVoicePrompt={setVoicePrompt}
-              setAudioDuration={setAudioDuration} 
-              voiceType={voiceType!}            />
+              setAudioDuration={setAudioDuration}
+              voiceType={voiceType}
+            />
 
-            <GenerateThumbnail />
+            <GenerateThumbnail
+              setImage={setImageUrl}
+              setImageStorageId={setImageStorageId}
+              image={imageUrl}
+              imagePrompt={imagePrompt}
+              setImagePrompt={setImagePrompt}
+            />
 
             <div className="mt-10 w-full">
               <Button className="text-16 w-full bg-orange-1 py-4 font-extrabold text-white-1 transition-all duration-500 hover:bg-black-1">
