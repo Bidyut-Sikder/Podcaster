@@ -57,6 +57,7 @@ function CreatePodcast() {
   const [audioUrl, setAudioUrl] = useState("");
   const [audioDuration, setAudioDuration] = useState(0);
   const [voicePrompt, setVoicePrompt] = useState("");
+
   const [voiceType, setVoiceType] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -164,12 +165,12 @@ function CreatePodcast() {
             <GeneratePodcast
               setAudioStorageId={setAudioStorageId}
               setAudio={setAudioUrl}
-              voiceType={voiceType}
+              
               audio={audioUrl}
               voicePrompt={voicePrompt}
               setVoicePrompt={setVoicePrompt}
-              setAudioDuration={setAudioDuration}
-            />
+              setAudioDuration={setAudioDuration} 
+              voiceType={'alloy'}            />
 
             <GenerateThumbnail />
 

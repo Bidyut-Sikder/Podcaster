@@ -41,6 +41,7 @@ const useGeneratePodcast = ({
         input: voicePrompt,
       });
 
+     
       const blob = new Blob([response], { type: "audio/mpeg" });
       const fileName = `podcast-${uuidv4()}.mp3`;
 
@@ -63,7 +64,7 @@ const useGeneratePodcast = ({
       setIsGenerating(false);
       toast({
         title: "Error generating a podcast.",
-        variant: "destructive",
+        variant: "default",
       });
       //todo:show error message
     }
