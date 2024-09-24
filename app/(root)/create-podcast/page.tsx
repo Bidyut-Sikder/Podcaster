@@ -170,7 +170,7 @@ function CreatePodcast() {
               voicePrompt={voicePrompt}
               setVoicePrompt={setVoicePrompt}
               setAudioDuration={setAudioDuration} 
-              voiceType={'alloy'}            />
+              voiceType={voiceType!}            />
 
             <GenerateThumbnail />
 
