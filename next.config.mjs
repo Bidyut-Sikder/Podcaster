@@ -4,17 +4,18 @@ const nextConfig = {
     enabled: true,
     // Additional HTTP configuration options if needed
   },
-    images: {
-        remotePatterns: [
-          {
-            protocol: 'https',
-            hostname: 'lovely-flamingo-139.convex.cloud',
-          //  port: '',
-           // pathname: '/account123/**',
-          },
-        ],
-      }
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lovely-flamingo-139.convex.cloud",
+      },
+      {
+        protocol: "https",
+        hostname: "trustworthy-ibex-124.convex.cloud",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
-   

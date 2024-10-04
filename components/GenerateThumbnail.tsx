@@ -44,8 +44,10 @@ function GenerateThumbnail({
       setImage(imageUrl!);
 
       setImageLoading(false);
-      toast({ title: "Thumbnail generated successfully.", variant: "destructive" });
-
+      toast({
+        title: "Thumbnail generated successfully.",
+        variant: "destructive",
+      });
     } catch (error) {
       console.log(error);
       toast({ title: "Error generating thumbnail", variant: "destructive" });
@@ -54,8 +56,20 @@ function GenerateThumbnail({
 
   const generateImage = async () => {};
 
-  const uplaodImage = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
+  const uplaodImage = async (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    try {
+      const files = e.target.files;
+      if (!files) return;
+
+      const file = files[0];
+      const blob = await file.arrayBuffer().then((ab) => new Blob([ab]));
+      handleImage(blob, file.name);
+    } catch (error) {
+      console.log(error);
+      toast({ title: "Error uploading image", variant: "destructive" });
+    }
   };
 
   return (
