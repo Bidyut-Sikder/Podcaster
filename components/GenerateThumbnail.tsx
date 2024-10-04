@@ -8,9 +8,10 @@ import { Loader } from "lucide-react";
 import { Input } from "./ui/input";
 import Image from "next/image";
 import { toast } from "@/hooks/use-toast";
-import { useMutation } from "convex/react";
+import { useAction, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useUploadFiles } from "@xixixao/uploadstuff/react";
+import { v4 as uuidv4 } from "uuid";
 
 function GenerateThumbnail({
   setImage,
@@ -25,7 +26,7 @@ function GenerateThumbnail({
   const imageRef = useRef<HTMLInputElement>(null);
 
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
-
+  const handleGenerateThubnail = useAction(api.openai.generateThumbnailAction);
   const { startUpload } = useUploadFiles(generateUploadUrl);
 
   const getImageUrl = useMutation(api.podcasts.getUrl);
@@ -54,7 +55,17 @@ function GenerateThumbnail({
     }
   };
 
-  const generateImage = async () => {};
+  const generateImage = async () => {
+    try {
+      const response = await handleGenerateThubnail({ prompt: imagePrompt });
+
+      const blob = new Blob([response], { type: "image/png" });
+      handleImage(blob, `thumbnail-${uuidv4()}.png`);
+    } catch (error) {
+      console.log(error);
+      toast({ title: "Error generating thumbnail", variant: "destructive" });
+    }
+  };
 
   const uplaodImage = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
