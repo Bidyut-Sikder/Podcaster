@@ -13,6 +13,8 @@ import { api } from "@/convex/_generated/api";
 import { useUploadFiles } from "@xixixao/uploadstuff/react";
 import { v4 as uuidv4 } from "uuid";
 
+
+
 function GenerateThumbnail({
   setImage,
   setImageStorageId,
@@ -27,6 +29,7 @@ function GenerateThumbnail({
 
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const handleGenerateThubnail = useAction(api.openai.generateThumbnailAction);
+
   const { startUpload } = useUploadFiles(generateUploadUrl);
 
   const getImageUrl = useMutation(api.podcasts.getUrl);
@@ -36,6 +39,7 @@ function GenerateThumbnail({
     setImage("");
     try {
       const file = new File([blob], fileName, { type: "image/png" });
+     
       const uploaded = await startUpload([file]);
 
       const storageId = (uploaded[0].response as any).storageId;
@@ -56,6 +60,7 @@ function GenerateThumbnail({
   };
 
   const generateImage = async () => {
+   
     try {
       const response = await handleGenerateThubnail({ prompt: imagePrompt });
 
@@ -65,7 +70,7 @@ function GenerateThumbnail({
       console.log(error);
       toast({ title: "Error generating thumbnail", variant: "destructive" });
     }
-  };
+  }; 
 
   const uplaodImage = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

@@ -30,6 +30,7 @@ import GeneratePodcast from "@/components/GeneratePodcast";
 import GenerateThumbnail from "@/components/GenerateThumbnail";
 import { Airplay, Loader } from "lucide-react";
 import { Id } from "@/convex/_generated/dataModel";
+import { toast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   podcastTitle: z.string().min(2, {
@@ -58,8 +59,7 @@ function CreatePodcast() {
   const [audioDuration, setAudioDuration] = useState(0);
   const [voicePrompt, setVoicePrompt] = useState("");
 
-
-     const [voiceType, setVoiceType] = useState<string>('');
+  const [voiceType, setVoiceType] = useState<string>("");
   //  const [voiceType, setVoiceType] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -74,6 +74,27 @@ function CreatePodcast() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
+
+    try {
+      setIsSubmitting(true);
+      // if (!audioUrl || !imageUrl || !voiceType) {
+      //   toast({ title: "Please fill all the fields" });
+      //   setIsSubmitting(false);
+      //   throw new Error("Please generate audio and image.");
+      // }
+
+
+
+
+      
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+    }
   }
   return (
     <section className="mt-10 flex flex-col">

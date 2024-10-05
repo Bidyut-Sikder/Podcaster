@@ -1,4 +1,4 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import { mutation } from "./_generated/server";
 
 export const getUrl = mutation({
@@ -7,5 +7,24 @@ export const getUrl = mutation({
   },
   handler: async (ctx, args) => {
     return await ctx.storage.getUrl(args.storageId);
+  },
+});
+
+export const createPodcast = mutation({
+  args: {},
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) {
+      throw new ConvexError("Not Authenticated.");
+    }
+
+    const user = await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("email"), identity.email))
+      .collect();
+
+    if (user.length === 0) {
+      throw new ConvexError("User not found.");
+    }
   },
 });
