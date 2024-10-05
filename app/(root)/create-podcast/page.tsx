@@ -31,6 +31,8 @@ import GenerateThumbnail from "@/components/GenerateThumbnail";
 import { Airplay, Loader } from "lucide-react";
 import { Id } from "@/convex/_generated/dataModel";
 import { toast } from "@/hooks/use-toast";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 const formSchema = z.object({
   podcastTitle: z.string().min(2, {
@@ -62,6 +64,8 @@ function CreatePodcast() {
   const [voiceType, setVoiceType] = useState<string>("");
   //  const [voiceType, setVoiceType] = useState<string | null>(null);
 
+  const createPodcast = useMutation(api.podcasts.createPodcast);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -70,10 +74,9 @@ function CreatePodcast() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
 
     try {
       setIsSubmitting(true);
@@ -83,10 +86,22 @@ function CreatePodcast() {
       //   throw new Error("Please generate audio and image.");
       // }
 
+      const podcast = await createPodcast({
+        podcastTitle: data.podcastTitle,
+        podcastDescription: data.podcastDescription,
+        audioUrl,
+        imageUrl,
+        voiceType,
+        imagePrompt,
+        voicePrompt,
+        views: 0,
+        audioDuration,
+        audioStorageId: audioStorageId!,
+        imageStorageId: imageStorageId!,
+      });
+      toast({ title: "Podcast created." });
 
-
-
-      
+      setIsSubmitting(false);
     } catch (error) {
       console.log(error);
       toast({

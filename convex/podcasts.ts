@@ -11,7 +11,19 @@ export const getUrl = mutation({
 });
 
 export const createPodcast = mutation({
-  args: {},
+  args: {
+    podcastTitle: v.string(),
+    podcastDescription: v.string(),
+    audioUrl: v.string(),
+    imageUrl: v.string(),
+    voiceType: v.string(),
+    imagePrompt: v.string(),
+    voicePrompt: v.string(),
+    views: v.number(),
+    audioDuration: v.number(),
+    audioStorageId: v.id("_storage"),
+    imageStorageId: v.id("_storage"),
+  },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
@@ -26,5 +38,15 @@ export const createPodcast = mutation({
     if (user.length === 0) {
       throw new ConvexError("User not found.");
     }
+
+    const podcast = await ctx.db.insert("podcasts", {
+      ...args,
+      user: user[0]._id,
+      author: user[0].name,
+      authorId: user[0].clerkId,
+      authorImageUrl: user[0].imageUrl,
+    });
+
+    return podcast
   },
 });
