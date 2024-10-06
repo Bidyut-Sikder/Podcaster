@@ -33,6 +33,7 @@ import { Id } from "@/convex/_generated/dataModel";
 import { toast } from "@/hooks/use-toast";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   podcastTitle: z.string().min(2, {
@@ -46,6 +47,8 @@ const formSchema = z.object({
 const voiceCategories = ["alloy", "shimmer", "nova", "echo", "fable", "onyx"];
 
 function CreatePodcast() {
+  const router=useRouter()
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [imagePrompt, setImagePrompt] = useState("");
   const [imageUrl, setImageUrl] = useState("");
@@ -102,6 +105,7 @@ function CreatePodcast() {
       toast({ title: "Podcast created." });
 
       setIsSubmitting(false);
+      router.push('/')
     } catch (error) {
       console.log(error);
       toast({
@@ -238,3 +242,16 @@ function CreatePodcast() {
 }
 
 export default CreatePodcast;
+
+
+
+
+//Whether you're building a simple list or a complex scrollable interface, FlatList should be your go-to choice! 
+
+
+
+
+
+
+
+
