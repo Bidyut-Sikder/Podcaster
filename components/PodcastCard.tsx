@@ -1,5 +1,11 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
+
+import { PodcastCardProps } from "@/types";
+import { useRouter } from "next/navigation";
+import { Router } from "next/router";
 
 const PodcastCard = ({
   podcastId,
@@ -12,8 +18,15 @@ const PodcastCard = ({
   imgURL: string;
   description: string;
 }) => {
+  const router = useRouter();
+  const handleViews = () => {
+    router.push(`/podcasts/${podcastId}`, {
+      scroll: true,
+    });
+  };
+
   return (
-    <div className="cursor-pointer">
+    <div className="cursor-pointer" onClick={handleViews}>
       <figure className="flex flex-col gap-2">
         <Image
           className="aspect-square rounded-xl 2xl:size-[200px] h-fit w-full"

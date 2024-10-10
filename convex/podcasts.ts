@@ -25,6 +25,7 @@ export const createPodcast = mutation({
     imageStorageId: v.id("_storage"),
   },
   handler: async (ctx, args) => {
+    console.log("bidyut");
     const identity = await ctx.auth.getUserIdentity();
     if (!identity) {
       throw new ConvexError("Not Authenticated.");
@@ -51,16 +52,17 @@ export const createPodcast = mutation({
   },
 });
 
+export const getTrendingPodcasts = query({
+  handler: async (ctx) => {
+    const podcasts = await ctx.db.query("podcasts").collect();
+    return podcasts;
+  },
+});
 
-
-
-
-export const getTrendingPodcasts=query({
-  handler:async (ctx)=>{
-    const podcasts=await ctx.db.query("podcasts").collect()
-    return podcasts
-  }
-})
-
-
-
+export const getPodcastsById = query({
+  args: { podcastId: v.id("podcasts") },
+  handler: async (ctx, args) => {
+    const podcast = await ctx.db.get(args.podcastId);
+    return podcast;
+  },
+});
